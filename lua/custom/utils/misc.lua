@@ -30,7 +30,7 @@ function M.diag_goto(next, severity)
 end
 
 -- Toggle diagnostics on/off
-function M.diag_toggle()
+function M.toggle_diag()
     local isEnabled = vim.diagnostic.is_enabled()
 
     if isEnabled then
@@ -38,6 +38,23 @@ function M.diag_toggle()
     else
         vim.diagnostic.enable(true)
     end
+end
+
+-- Toggle highlight - shamelessly stolen from
+-- https://github.com/tjdevries/config.nvim/blob/master/plugin/keymaps.lua
+function M.toggle_highlight()
+    if vim.v.hlsearch == 1 then
+        vim.cmd.nohl()
+        return ''
+    else
+        return vim.keycode '<CR>'
+    end
+end
+
+-- Toggle inlay hints - also from
+-- https://github.com/tjdevries/config.nvim/blob/master/plugin/keymaps.lua
+function M.toggle_hints()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = 0 }, { bufnr = 0 })
 end
 
 return M
