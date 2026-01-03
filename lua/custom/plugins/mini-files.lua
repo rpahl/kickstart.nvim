@@ -5,13 +5,14 @@ return {
             close = 'q',
             go_in = 'L',
             go_in_plus = '<CR>',
-            go_out = '<H>',
-            go_out_plus = '<^>',
-            reset = '<C-S-u>',
-            show_help = 'g?',
-            synchronize = '=',
-            trim_left = '<Left>',
-            trim_right = '<Right>',
+            go_out = 'H',
+            go_out_plus = '^',
+            reset = '<C-u>',
+            reveal_cwd = '<leader>mw',
+            show_help = '<leader>mh',
+            synchronize = '<leader>ms',
+            trim_left = '<C-H>',
+            trim_right = '<C-L>',
         },
         windows = {
             preview = true,
@@ -48,14 +49,14 @@ return {
                     require('mini.files').open(vim.uv.cwd(), true)
                 end
             end,
-            desc = 'Open mini.files (Directory of Current File or CWD if not exists)',
+            desc = 'Open mini.files (in dir of current file or cwd if not exists)',
         },
         {
-            '<leader>mE',
+            '<leader>mw',
             function()
                 require('mini.files').open(vim.uv.cwd(), true)
             end,
-            desc = 'Open mini.files (cwd)',
+            desc = 'Open mini.files (in current [w]orking dir)',
         },
     },
 }

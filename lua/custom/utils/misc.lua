@@ -1,8 +1,8 @@
 -- Define some helper functions
-local lib = {}
+local M = {}
 
 -- Delete all lowercase marks (a–z) set on the current line
-function lib.delmarks()
+function M.delmarks()
     local cur_line = vim.fn.line '.'
     local marks = {}
 
@@ -18,7 +18,8 @@ function lib.delmarks()
     end
 end
 
-local diagnostic_goto = function(next, severity)
+-- Jump to certain diagnostics
+function M.diag_goto(next, severity)
     return function()
         vim.diagnostic.jump {
             count = (next and 1 or -1) * vim.v.count1,
@@ -28,6 +29,15 @@ local diagnostic_goto = function(next, severity)
     end
 end
 
-lib.diag_goto = diagnostic_goto
+-- Toggle diagnostics on/off
+function M.diag_toggle()
+    local isEnabled = vim.diagnostic.is_enabled()
 
-return lib
+    if isEnabled then
+        vim.diagnostic.enable(false)
+    else
+        vim.diagnostic.enable(true)
+    end
+end
+
+return M
