@@ -3,11 +3,11 @@ return {
     opts = {
         mappings = {
             close = 'q',
-            go_in = 'l',
+            go_in = 'L',
             go_in_plus = '<CR>',
-            go_out = 'h',
-            go_out_plus = 'H',
-            reset = '<BS>',
+            go_out = '<H>',
+            go_out_plus = '<^>',
+            reset = '<C-S-u>',
             show_help = 'g?',
             synchronize = '=',
             trim_left = '<Left>',
@@ -33,7 +33,7 @@ return {
             -- Open the directory of the file currently being edited
             -- If the file doesn't exist because you maybe switched to a new git branch
             -- open the current working directory
-            '<leader>em',
+            '<leader>me',
             function()
                 local buf_name = vim.api.nvim_buf_get_name(0)
                 local dir_name = vim.fn.fnamemodify(buf_name, ':p:h')
@@ -51,7 +51,7 @@ return {
             desc = 'Open mini.files (Directory of Current File or CWD if not exists)',
         },
         {
-            '<leader>eM',
+            '<leader>mE',
             function()
                 require('mini.files').open(vim.uv.cwd(), true)
             end,
