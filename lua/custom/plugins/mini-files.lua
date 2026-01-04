@@ -34,7 +34,7 @@ return {
             -- Open the directory of the file currently being edited
             -- If the file doesn't exist because you maybe switched to a new git branch
             -- open the current working directory
-            '<leader>me',
+            '<leader>em',
             function()
                 local buf_name = vim.api.nvim_buf_get_name(0)
                 local dir_name = vim.fn.fnamemodify(buf_name, ':p:h')
@@ -49,14 +49,14 @@ return {
                     require('mini.files').open(vim.uv.cwd(), true)
                 end
             end,
-            desc = 'Open mini.files (in dir of current file or cwd if not exists)',
+            desc = 'Open mini-files explorer',
         },
         {
-            '<leader>mw',
+            '<leader>eM',
             function()
                 require('mini.files').open(vim.uv.cwd(), true)
             end,
-            desc = 'Open mini.files (in current [w]orking dir)',
+            desc = 'Open mini-files (cwd)',
         },
     },
 }
