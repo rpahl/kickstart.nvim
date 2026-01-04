@@ -62,3 +62,7 @@ end)
 --   and `:help lua-options-guide`
 opt.list = true
 opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
+-- Completely ignore file modelines like: vim: ts=2 sts=2 sw=2 et
+-- as it overrides the global shiftwidth and tabstop option values
+opt.modeline = false
