@@ -23,18 +23,40 @@ set({ 'i' }, '<C-s>', '<Esc><S-s>', { noremap = true }) -- delete whole line in 
 set('v', 'p', '"_dP', silent_nore) -- Keep last yanked when pasting
 
 -- Move lines (and re-indent)
-set('n', '<A-j>', ':m .+1<CR>==', { silent = true, noremap = true, desc = 'Move current line down' })
-set('n', '<A-k>', ':m .-2<CR>==', { silent = true, noremap = true, desc = 'Move current line up' })
-set('v', '<A-j>', ":m '>+1<CR>gv=gv", { silent = true, noremap = true, desc = 'Move selected lines down' })
-set('v', '<A-k>', ":m '<-2<CR>gv=gv", { silent = true, noremap = true, desc = 'Move selected lines up' })
+set(
+  'n', '<A-j>', ':m .+1<CR>==',
+  { silent = true, noremap = true, desc = 'Move current line down' }
+)
+set(
+  'n', '<A-k>', ':m .-2<CR>==',
+  { silent = true, noremap = true, desc = 'Move current line up' }
+)
+set(
+  'v', '<A-j>', ":m '>+1<CR>gv=gv",
+  { silent = true, noremap = true, desc = 'Move selected lines down' }
+)
+set(
+  'v', '<A-k>', ":m '<-2<CR>gv=gv",
+  { silent = true, noremap = true, desc = 'Move selected lines up' }
+)
 
-set('n', 'dm', umi.delmarks, { silent = true, desc = 'Delete marks on current line' })
+set(
+  'n', 'dm', umi.delmarks,
+  { silent = true, desc = 'Delete marks on current line' }
+)
 
 --------
 -- Infos
 -- -----
-set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics [q]uickfix list' })
-set('n', '<leader>w', '<cmd>WhichKey<CR>', { silent = true, desc = 'Show [w]hich keybindings are available' })
+set(
+  'n', '<leader>q', vim.diagnostic.setloclist,
+  { desc = 'Open diagnostics [q]uickfix list' }
+)
+set(
+  'n', '<leader>?', '<cmd>WhichKey<CR>',
+  { silent = true, desc = 'Show global keybindings' }
+)
+
 
 -------------
 -- Navigation
@@ -44,15 +66,21 @@ set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Lazy block-moving
-set({ 'n', 'v' }, '<C-j>', '5j', { silent = true, noremap = true, desc = 'Move 5 lines down' })
-set({ 'n', 'v' }, '<C-k>', '5k', { silent = true, noremap = true, desc = 'Move 5 lines up' })
+set(
+  { 'n', 'v' }, '<C-j>', '5j',
+  { silent = true, noremap = true, desc = 'Move 5 lines down' }
+)
+set(
+  { 'n', 'v' }, '<C-k>', '5k',
+  { silent = true, noremap = true, desc = 'Move 5 lines up' }
+)
 
 -- Jump quickly between diagnostics
 local fdigo = umi.diag_goto
-set('n', ']d', fdigo(true), { desc = 'next [d]iagnostic' })
-set('n', '[d', fdigo(false), { desc = 'prev [d]iagnostic' })
-set('n', ']e', fdigo(true, 'ERROR'), { desc = 'next [e]rror' })
-set('n', '[e', fdigo(false, 'ERROR'), { desc = 'prev [e]rror' })
+set('n', ']d', fdigo(true), { desc = 'next [D]iagnostic' })
+set('n', '[d', fdigo(false), { desc = 'prev [D]iagnostic' })
+set('n', ']e', fdigo(true, 'ERROR'), { desc = 'next [E]rror' })
+set('n', '[e', fdigo(false, 'ERROR'), { desc = 'prev [E]rror' })
 
 -- Jump quickly between buffers
 -- TODO: I'd like to have <leader><leader>b for this
@@ -65,20 +93,38 @@ set('n', '<A-j>', '<cmd>resize -2<CR>', { silent = true })
 
 -- TODO: consider creating maps to jump to next ], }, ) and prev [, {, (
 -- if mapped using f, t motions, we then can proceed with ; and , as usual
+-- set('n', '<leader>f0', { desc = 'prev [e]rror' })
 
-------------
--- Save/Load
--- ---------
-set('n', '<leader>ss', ':mksession! .session.vim<CR>', { noremap = true, desc = '[s]ave [s]ession' })
-set('n', '<leader>so', ':source .session.vim<CR>', { noremap = true, desc = '[so]urce session' })
-set('n', '<leader>sn', '<cmd>noautocmd w <CR>', silent_nore) -- save file without auto-formatting
+----------
+-- Session
+-- -------
+set(
+  'n', '<leader>ss', ':mksession! .session.vim<CR>',
+  { noremap = true, desc = 'Save session' }
+)
+set(
+  'n', '<leader>so', ':source .session.vim<CR>',
+  { noremap = true, desc = 'Open session' }
+)
+set('n', '<leader>sc', ':qa<CR>', { desc = 'Close session' })
+
 
 ----------
 -- Toggles
 -- -------
-set('n', '<leader>td', umi.toggle_diag, { desc = '[t]oggle [d]iagnostics messages' }) -- TODO: map to <leader><leader>d
-set('n', '<CR>', umi.toggle_highlight, { expr = true })
-set('n', '<leader>tw', '<cmd>set wrap!<CR>', { noremap = true, desc = '[t]oggle line [w]rap' })
+set(
+  'n', '<leader><leader>d', umi.toggle_diag, -- TODO: map to <leader><leader>d
+  { desc = 'Toggle [d]iagnostics messages' }
+)
+set(
+  'n', '<CR>', umi.toggle_highlight,
+  { expr = true, desc = 'Toggle highlight' }
+)
+set(
+  'n', '<leader><leader>w', '<cmd>set wrap!<CR>',
+  { noremap = true, desc = 'Toggle line [w]rap' }
+)
+
 
 -- Plugins to install maybe
 -- https://github.com/folke/trouble.nvim
