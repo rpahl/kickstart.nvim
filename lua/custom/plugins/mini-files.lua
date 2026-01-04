@@ -7,22 +7,22 @@ return {
             go_in_plus = '<CR>',
             go_out = 'H',
             go_out_plus = '^',
-            reset = '<C-u>',
+            reset = '<leader>mu',
             reveal_cwd = '<leader>mw',
             show_help = '<leader>mh',
             synchronize = '<leader>ms',
-            trim_left = '<C-H>',
-            trim_right = '<C-L>',
+            trim_left = '<leader>m>',
+            trim_right = '<leader>m<',
         },
         windows = {
             preview = true,
             width_focus = 40,
-            width_preview = 60,
+            width_preview = 80,
         },
         options = {
             -- Whether to use for editing directories
             -- Disabled by default in LazyVim because neo-tree is used for that
-            use_as_default_explorer = true,
+            use_as_default_explorer = false,
             -- If set to false, files are not deleted but moved to the trash directory
             -- mini.files/trash, which is created in the following dir:
             -- :echo stdpath('data')
