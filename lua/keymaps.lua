@@ -7,56 +7,31 @@ local silent_nore = { noremap = true, silent = true }
 local set = vim.keymap.set
 local umi = require 'custom.utils.misc'
 
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
+-- This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+-- Key remaps to mitigate german keyboard layout
+set({ 'n', 'x', 'o' }, 'ö', '[', { remap = true, silent = true, desc = 'ö as [' })
+set({ 'n', 'x', 'o' }, 'ä', ']', { remap = true, silent = true, desc = 'ä as ]' })
 
 ----------
 -- Editing
 -- -------
+set('v', 'p', '"_dP', silent_nore) -- Keep last yanked when pasting
 set({ 'i' }, '<C-s>', '<Esc><S-s>', { noremap = true }) -- delete whole line in insert mode
 -- Remember: to delete word by word backwards in insert mode, use builtin <C-w>
 
-set('v', 'p', '"_dP', silent_nore) -- Keep last yanked when pasting
-
 -- Move lines (and re-indent)
-set(
-  'n', '<A-j>', ':m .+1<CR>==',
-  { silent = true, noremap = true, desc = 'Move current line down' }
-)
-set(
-  'n', '<A-k>', ':m .-2<CR>==',
-  { silent = true, noremap = true, desc = 'Move current line up' }
-)
-set(
-  'v', '<A-j>', ":m '>+1<CR>gv=gv",
-  { silent = true, noremap = true, desc = 'Move selected lines down' }
-)
-set(
-  'v', '<A-k>', ":m '<-2<CR>gv=gv",
-  { silent = true, noremap = true, desc = 'Move selected lines up' }
-)
-
-set(
-  'n', 'dm', umi.delmarks,
-  { silent = true, desc = 'Delete marks on current line' }
-)
+set('v', '<A-j>', ":m '>+1<CR>gv=gv", { silent = true, noremap = true, desc = 'Move selected lines down' })
+set('v', '<A-k>', ":m '<-2<CR>gv=gv", { silent = true, noremap = true, desc = 'Move selected lines up' })
 
 --------
 -- Infos
 -- -----
-set(
-  'n', '<leader>q', vim.diagnostic.setloclist,
-  { desc = 'Open diagnostics [q]uickfix list' }
-)
-set(
-  'n', '<leader>?', '<cmd>WhichKey<CR>',
-  { silent = true, desc = 'Show global keybindings' }
-)
-
+set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics [q]uickfix list' })
+set('n', '<leader>?', '<cmd>WhichKey<CR>', { silent = true, desc = 'Show global keybindings' })
+set('n', 'dm', umi.delmarks, { silent = true, desc = 'Delete marks on current line' })
 
 -------------
 -- Navigation
@@ -65,15 +40,9 @@ set(
 set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- Lazy block-moving
-set(
-  { 'n', 'v' }, '<C-j>', '5j',
-  { silent = true, noremap = true, desc = 'Move 5 lines down' }
-)
-set(
-  { 'n', 'v' }, '<C-k>', '5k',
-  { silent = true, noremap = true, desc = 'Move 5 lines up' }
-)
+-- Remap block-wise movement as these are ugly on german keyboard layout
+set({ 'n', 'v' }, '<C-j>', '}', { silent = true, noremap = true, desc = 'Next free line down' })
+set({ 'n', 'v' }, '<C-k>', '{', { silent = true, noremap = true, desc = 'Next free line up' })
 
 -- Jump quickly between diagnostics
 local fdigo = umi.diag_goto
@@ -82,14 +51,15 @@ set('n', '[d', fdigo(false), { desc = 'prev [D]iagnostic' })
 set('n', ']e', fdigo(true, 'ERROR'), { desc = 'next [E]rror' })
 set('n', '[e', fdigo(false, 'ERROR'), { desc = 'prev [E]rror' })
 
--- Jump quickly between buffers
--- TODO: I'd like to have <leader><leader>b for this
+-- Buffers
+set('n', '<leader>bb', '<cmd>e #<cr>', { desc = 'Switch to Other Buffer' })
+set('n', '<leader><leader>b', '<cmd>e #<cr>', { desc = 'Switch to Other Buffer' })
 
 -- Split adjustment
-set('n', '<A-h>', '<cmd>vertical resize +4<CR>', { silent = true, desc = '' })
-set('n', '<A-l>', '<cmd>vertical resize -4<CR>', { silent = true })
-set('n', '<A-k>', '<cmd>resize +2<CR>', { silent = true })
-set('n', '<A-j>', '<cmd>resize -2<CR>', { silent = true })
+set('n', '<A-h>', '<cmd>vertical resize +4<CR>')
+set('n', '<A-l>', '<cmd>vertical resize -4<CR>')
+set('n', '<A-k>', '<cmd>resize +2<CR>')
+set('n', '<A-j>', '<cmd>resize -2<CR>')
 
 -- TODO: consider creating maps to jump to next ], }, ) and prev [, {, (
 -- if mapped using f, t motions, we then can proceed with ; and , as usual
@@ -98,41 +68,23 @@ set('n', '<A-j>', '<cmd>resize -2<CR>', { silent = true })
 ----------
 -- Session
 -- -------
-set(
-  'n', '<leader>ss', ':mksession! .session.vim<CR>',
-  { noremap = true, desc = 'Save session' }
-)
-set(
-  'n', '<leader>so', ':source .session.vim<CR>',
-  { noremap = true, desc = 'Open session' }
-)
+set('n', '<leader>ss', ':mksession! .session.vim<CR>', { noremap = true, desc = 'Save session' })
+set('n', '<leader>so', ':source .session.vim<CR>', { noremap = true, desc = 'Open session' })
 set('n', '<leader>sc', ':qa<CR>', { desc = 'Close session' })
-
 
 ----------
 -- Toggles
 -- -------
-set(
-  'n', '<leader><leader>d', umi.toggle_diag, -- TODO: map to <leader><leader>d
-  { desc = 'Toggle [d]iagnostics messages' }
-)
-set(
-  'n', '<CR>', umi.toggle_highlight,
-  { expr = true, desc = 'Toggle highlight' }
-)
-set(
-  'n', '<leader><leader>w', '<cmd>set wrap!<CR>',
-  { noremap = true, desc = 'Toggle line [w]rap' }
-)
-
+set('n', '<leader><leader>d', umi.toggle_diag, { desc = 'Toggle [d]iagnostics messages on/off' })
+set('n', '<CR>', umi.toggle_highlight, { expr = true, desc = 'Toggle highlight on/off' })
+set('n', '<leader><leader>w', '<cmd>set wrap!<CR>', { noremap = true, desc = 'Toggle line [w]rap' })
 
 -- Plugins to install maybe
 -- https://github.com/folke/trouble.nvim
 -- https://github.com/mbbill/undotree
 -- https://github.com/tpope/vim-fugitive
 -- vimium browser and/or w3m with yuratomo/w3m.vim
--- keyboard
 -- folke/zen-mode
 -- github/copilot.vim
-
--- tjdevries
+--
+-- new keyboard?

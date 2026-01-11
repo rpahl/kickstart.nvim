@@ -60,7 +60,7 @@ return {
       -- Document existing key chains
       spec = {
         { '<leader>b', group = 'Buffer' },
-        { '<leader>e', group = 'File explorer' },
+        { '<leader>m', group = 'Mini file explorer' },
         { '<leader>f', group = '[F]ind telescope' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         { '<leader>s', group = 'Session' },

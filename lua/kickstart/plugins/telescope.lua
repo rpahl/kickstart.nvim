@@ -53,7 +53,6 @@ return {
       -- See `:help telescope` and `:help telescope.setup()`
 
       local actions = require 'telescope.actions'
-      -- local builtin = require 'telescope.builtin'
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
@@ -114,8 +113,8 @@ return {
       pcall(require('telescope').load_extension, { 'fzf', 'ui-select' })
 
       -- See `:help telescope.builtin`
-      local tel = require 'telescope.builtin'
       local set = vim.keymap.set
+      local tel = require 'telescope.builtin'
 
       set('n', '<leader>/', function()
         tel.current_buffer_fuzzy_find(
