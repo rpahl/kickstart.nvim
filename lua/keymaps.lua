@@ -51,6 +51,8 @@ set('n', '[d', fdigo(false), { desc = 'prev [D]iagnostic' })
 set('n', ']e', fdigo(true, 'ERROR'), { desc = 'next [E]rror' })
 set('n', '[e', fdigo(false, 'ERROR'), { desc = 'prev [E]rror' })
 
+set('n', 'g.', '`.', { noremap = true, desc = 'goto last edit' })
+
 -- Buffers
 set('n', '<leader>bb', '<cmd>e #<cr>', { desc = 'Switch to Other Buffer' })
 set('n', '<leader><leader>b', '<cmd>e #<cr>', { desc = 'Switch to Other Buffer' })
