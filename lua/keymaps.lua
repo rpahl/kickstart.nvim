@@ -40,9 +40,9 @@ set('n', 'dm', umi.delmarks, { silent = true, desc = 'Delete marks on current li
 set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- Remap block-wise movement as these are ugly on german keyboard layout
-set({ 'n', 'v' }, '<C-j>', '}', { silent = true, noremap = true, desc = 'Next free line down' })
-set({ 'n', 'v' }, '<C-k>', '{', { silent = true, noremap = true, desc = 'Next free line up' })
+-- Vertical scroll and center
+vim.keymap.set('n', '<C-d>', '<C-d>zz', silent_nore)
+vim.keymap.set('n', '<C-u>', '<C-u>zz', silent_nore)
 
 -- Jump quickly between diagnostics
 local fdigo = umi.diag_goto
@@ -58,10 +58,10 @@ set('n', '<leader>bb', '<cmd>e #<cr>', { desc = 'Switch to Other Buffer' })
 set('n', '<leader><leader>b', '<cmd>e #<cr>', { desc = 'Switch to Other Buffer' })
 
 -- Split adjustment
-set('n', '<A-h>', '<cmd>vertical resize +4<CR>')
-set('n', '<A-l>', '<cmd>vertical resize -4<CR>')
-set('n', '<A-k>', '<cmd>resize +2<CR>')
-set('n', '<A-j>', '<cmd>resize -2<CR>')
+set('n', '<C-w>p', '<cmd>vertical resize +4<CR>')
+set('n', '<C-w>u', '<cmd>vertical resize -4<CR>')
+set('n', '<C-w>o', '<cmd>resize +2<CR>')
+set('n', '<C-w>i', '<cmd>resize -2<CR>')
 
 -- TODO: consider creating maps to jump to next ], }, ) and prev [, {, (
 -- if mapped using f, t motions, we then can proceed with ; and , as usual
