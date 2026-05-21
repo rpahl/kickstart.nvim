@@ -209,7 +209,8 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         r_language_server = {
-          cmd = { 'R', '--slave', '-e', 'languageserver::run()' }
+          cmd = { 'R', '--slave', '-e', 'languageserver::run()' },
+          filetypes = { 'r', 'rmd' }
         },
         -- gopls = {},
         -- pyright = {},
