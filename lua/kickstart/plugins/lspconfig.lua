@@ -207,11 +207,24 @@ return {
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-      local servers = {
+      -- Servers installed manually (not via Mason) — configured directly
+      local manual_servers = {
         r_language_server = {
           cmd = { 'R', '--slave', '-e', 'languageserver::run()' },
-          filetypes = { 'r', 'rmd' }
+          filetypes = { 'r', 'rmd', 'rmarkdown' },
         },
+      }
+      for server_name, config in pairs(manual_servers) do
+        config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, config.capabilities or {})
+        vim.lsp.config(server_name, config)
+        vim.lsp.enable(server_name)
+      end
+
+      -- Servers managed by Mason
+      local servers = {
+        -- ts_ls = {},
+        -- html = {},
+        -- cssls = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
